@@ -14,13 +14,14 @@ namespace Library2
 					Data Source=(localdb)\MSSQLLocalDB;
 					Initial Catalog=LibraryPD_321;
 					Integrated Security=True;
+
 					Connect Timeout=30;
 					Encrypt=False;
 					TrustServerCertificate=False;
 					ApplicationIntent=ReadWrite;
 					MultiSubnetFailover=False";
 			Library library = new Library(connection_string);
-			library.InsertAuthor("Abercrombie", "Joe");
+			library.InsertAuthor("Abnett", "Dan");
 			library.SelectAuthors();
 
 			library.SelectBooks("Cameron");
