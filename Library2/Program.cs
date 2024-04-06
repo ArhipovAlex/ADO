@@ -23,6 +23,8 @@ namespace Library2
 			library.InsertAuthor("Abercrombie", "Joe");
 			library.SelectAuthors();
 
+			library.SelectBooks("Cameron");
+			library.InsertBook("Abercrombie", "The First Law", 1276, 170);
 			library.SelectBooks();
 		}
 	}

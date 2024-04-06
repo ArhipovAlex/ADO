@@ -62,9 +62,36 @@ namespace Library2
 				{
 					Console.WriteLine($" {reader[0].ToString().PadRight(10)} {reader[1].ToString().PadRight(15)} {reader[2].ToString().PadRight(15)}");
 				}
+				Console.WriteLine();
 			}
 			finally
 			{ 
+				if(connection!=null ) connection.Close();
+			}
+		}
+		public void SelectBooks(string author_last_name)
+		{
+			try
+			{
+				connection.Open();
+				string command = $@"
+					SELECT 
+						title AS Title,
+						[Author] = FORMATMESSAGE('%s %s', first_name, last_name)
+					FROM Books 
+					JOIN Authors ON author=author_id
+					WHERE last_name='{author_last_name}'";
+				cmd= new SqlCommand(command, connection);
+				SqlDataReader reader = cmd.ExecuteReader();
+				Console.WriteLine($"{reader.GetName(0).ToString().PadRight(32)} {reader.GetName(1).ToString().PadRight(32)}");
+				while (reader.Read())
+				{
+					Console.WriteLine($"{reader[0].ToString().PadRight(32)} {reader[1].ToString().PadRight(32)}");
+				}
+				Console.WriteLine();
+			}
+			finally
+			{
 				if(connection!=null ) connection.Close();
 			}
 		}
@@ -79,18 +106,44 @@ namespace Library2
 						[Author] = FORMATMESSAGE('%s %s', first_name, last_name)
 					FROM Books 
 					JOIN Authors ON author=author_id";
-				cmd= new SqlCommand(command, connection);
+				cmd = new SqlCommand(command, connection);
 				SqlDataReader reader = cmd.ExecuteReader();
 				Console.WriteLine($"{reader.GetName(0).ToString().PadRight(32)} {reader.GetName(1).ToString().PadRight(32)}");
 				while (reader.Read())
 				{
 					Console.WriteLine($"{reader[0].ToString().PadRight(32)} {reader[1].ToString().PadRight(32)}");
 				}
-
+				Console.WriteLine();
 			}
 			finally
 			{
-				if(connection!=null ) connection.Close();
+				if (connection != null) connection.Close();
+			}
+		}
+		public void InsertBook(string author_last_name, string title, int pages, int price)
+		{
+			try
+			{
+				connection.Open();
+				string command = $@"
+					IF NOT EXISTS
+					(
+						SELECT book_id FROM Books
+						WHERE	author=(SELECT author_id FROM Authors WHERE last_name='{author_last_name}')
+							AND title='{title}'
+					)
+					BEGIN
+						INSERT INTO Books
+							(author, title, pages, price)
+						VALUES
+							((SELECT author_id FROM Authors WHERE last_name='{author_last_name}'), '{title}', {pages}, {price})
+					END";
+				cmd = new SqlCommand(command, connection);
+				cmd.ExecuteNonQuery();
+			}
+			finally
+			{
+				if (connection != null) connection.Close();
 			}
 		}
 	}
