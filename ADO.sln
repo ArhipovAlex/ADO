@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleLibrary", "ConsoleLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library2", "Library2\Library2.csproj", "{B0090607-9797-4E72-BFA6-A56FA8BFCF65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library3", "Library3\Library3.csproj", "{D7AD9534-A582-4ABB-BDA0-8D51E76D9629}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B0090607-9797-4E72-BFA6-A56FA8BFCF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0090607-9797-4E72-BFA6-A56FA8BFCF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0090607-9797-4E72-BFA6-A56FA8BFCF65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7AD9534-A582-4ABB-BDA0-8D51E76D9629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7AD9534-A582-4ABB-BDA0-8D51E76D9629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7AD9534-A582-4ABB-BDA0-8D51E76D9629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7AD9534-A582-4ABB-BDA0-8D51E76D9629}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
