@@ -31,7 +31,7 @@ namespace Academy
 			LoadStudents();
 			LoadDataToComboBox("Groups","group_name", comboBoxStudentsGroup);
 			LoadDataToComboBox("Directions","direction_name", comboBoxStudentsDirection);
-			UpdateToolStripStatusLabelCountStudents();
+			UpdateToolStripStatusLabel();
 		}
 		void LoadStudents(string condition=null)
 		{
@@ -96,7 +96,7 @@ JOIN Directions	ON (direction=direction_id)
 		private void comboBoxStudentsGroup_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			LoadStudents($"group_name = '{comboBoxStudentsGroup.SelectedItem.ToString()}'");
-			UpdateToolStripStatusLabelCountStudents();
+			UpdateToolStripStatusLabel();
 		}
 
 		private void comboBoxStudentDirection_SelectedIndexChanged(object sender, EventArgs e)
@@ -109,11 +109,19 @@ JOIN Directions	ON (direction=direction_id)
 			}
 			else if (comboBoxStudentsDirection.SelectedIndex == 0) LoadDataToComboBox("Groups", "group_name", comboBoxStudentsGroup);
 			LoadStudents($"direction_name = '{comboBoxStudentsDirection.SelectedItem.ToString()}'");
-			UpdateToolStripStatusLabelCountStudents();
+			UpdateToolStripStatusLabel();
 		}
-		void UpdateToolStripStatusLabelCountStudents()
+		void UpdateToolStripStatusLabel()
 		{
-			toolStripStatusLabelCountStudents.Text = $"Кол-во студентов: {(dataGridViewStudents.RowCount-1).ToString()}";
+			toolStripStatusLabelStudentsCount.Text = $"Кол-во студентов: {(dataGridViewStudents.RowCount-1).ToString()}";
+			if(comboBoxStudentsDirection.SelectedIndex==0)
+			{
+				toolStripStatusLabelGroupsCount.Text = $"Всего групп: {comboBoxStudentsGroup.Items.Count-1}";
+			}
+			else
+			{
+				toolStripStatusLabelGroupsCount.Text = $"Групп по выбранному направлению: {comboBoxStudentsGroup.Items.Count-1}";
+			}
 		}
 	}
 }
