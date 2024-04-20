@@ -49,8 +49,7 @@ JOIN Directions	ON (direction=direction_id)
 			if(condition != null)
 			{
 				if (condition.Contains("--")) condition = null;
-				else
-				cmd += $"WHERE {condition}";
+				else cmd += $"WHERE {condition}";
 			}
 			SqlCommand command = new SqlCommand(cmd, connection);
 			reader = command.ExecuteReader();
