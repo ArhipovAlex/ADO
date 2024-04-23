@@ -105,6 +105,7 @@
 			this.buttonAddStudent.TabIndex = 11;
 			this.buttonAddStudent.Text = "Добавить";
 			this.buttonAddStudent.UseVisualStyleBackColor = true;
+			this.buttonAddStudent.Click += new System.EventHandler(this.buttonAddStudent_Click);
 			// 
 			// dataGridViewStudents
 			// 

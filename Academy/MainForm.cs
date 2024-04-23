@@ -122,6 +122,12 @@ JOIN Directions	ON (direction=direction_id)
 				toolStripStatusLabelGroupsCount.Text = $"Групп по выбранному направлению: {comboBoxStudentsGroup.Items.Count-1}";
 			}
 		}
+
+		private void buttonAddStudent_Click(object sender, EventArgs e)
+		{
+			FormStudent formStudent = new FormStudent();
+			formStudent.ShowDialog();
+		}
 	}
 }
 
