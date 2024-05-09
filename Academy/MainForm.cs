@@ -29,8 +29,8 @@ namespace Academy
 			}
 			//connection= new SqlConnection(connectionString);
 			LoadStudents();
-			LoadDataToComboBox("Groups","group_name", comboBoxStudentsGroup);
-			LoadDataToComboBox("Directions","direction_name", comboBoxStudentsDirection);
+			FormDataLoader.LoadDataToComboBox("Groups","group_name", comboBoxStudentsGroup,null,"--");
+			FormDataLoader.LoadDataToComboBox("Directions","direction_name", comboBoxStudentsDirection,null,"--");
 			UpdateToolStripStatusLabel();
 		}
 		void LoadStudents(string condition=null)
@@ -65,6 +65,7 @@ namespace Academy
 			//connection.Close();
 
 			string columns = $@"
+			[ID]					=stud_id,
 			[Ф.И.О.]				=FORMATMESSAGE('%s %s %s', last_name, first_name, middle_name),
 			[Дата рождения]			=birth_date,
 			[Группа]				=group_name,
@@ -76,6 +77,8 @@ namespace Academy
 			else condition = relations;
 			Connector connector = new Connector();
 			dataGridViewStudents.DataSource = connector.LoadColumnFromTable(columns, tables, condition);
+			dataGridViewStudents.Columns[0].Visible = false;
+			UpdateToolStripStatusLabel();
 		}
 		void LoadDataToComboBox(string tables, string column, ComboBox list, string condition=null)
 		{
@@ -121,12 +124,13 @@ namespace Academy
 		private void comboBoxStudentDirection_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			//comboBoxStudentsGroup.Items.Clear();
-			if (comboBoxStudentsDirection.SelectedIndex > 0)
-			{
-				string condition = $"direction=direction_id AND direction_name='{comboBoxStudentsDirection.SelectedItem.ToString()}'";
-				LoadDataToComboBox("Groups, Directions", "group_name", comboBoxStudentsGroup, condition);
-			}
-			else if (comboBoxStudentsDirection.SelectedIndex == 0) LoadDataToComboBox("Groups", "group_name", comboBoxStudentsGroup);
+			//if (comboBoxStudentsDirection.SelectedIndex > 0)
+			//{
+			//	string condition = $"direction=direction_id AND direction_name='{comboBoxStudentsDirection.SelectedItem.ToString()}'";
+			//	LoadDataToComboBox("Groups, Directions", "group_name", comboBoxStudentsGroup, condition);
+			//}
+			//else if (comboBoxStudentsDirection.SelectedIndex == 0) LoadDataToComboBox("Groups", "group_name", comboBoxStudentsGroup);
+			FormDataLoader.GroupFilter(comboBoxStudentsDirection, comboBoxStudentsGroup);
 			LoadStudents($"direction_name = '{comboBoxStudentsDirection.SelectedItem.ToString()}'");
 			UpdateToolStripStatusLabel();
 		}
@@ -135,18 +139,32 @@ namespace Academy
 			toolStripStatusLabelStudentsCount.Text = $"Кол-во студентов: {(dataGridViewStudents.RowCount-1).ToString()}";
 			if(comboBoxStudentsDirection.SelectedIndex==0)
 			{
-				toolStripStatusLabelGroupsCount.Text = $"Всего групп: {comboBoxStudentsGroup.Items.Count-1}";
+				toolStripStatusLabelGroupsCount.Text = $"Всего групп: {comboBoxStudentsGroup.Items.Count}";
 			}
 			else
 			{
-				toolStripStatusLabelGroupsCount.Text = $"Групп по выбранному направлению: {comboBoxStudentsGroup.Items.Count-1}";
+				toolStripStatusLabelGroupsCount.Text = $"Групп по выбранному направлению: {comboBoxStudentsGroup.Items.Count}";
 			}
 		}
 
 		private void buttonAddStudent_Click(object sender, EventArgs e)
 		{
 			FormStudent formStudent = new FormStudent();
-			formStudent.ShowDialog();
+			DialogResult result = formStudent.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				LoadStudents();
+			}
+		}
+
+		private void dataGridViewStudents_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			FormStudent form= new FormStudent();
+			int id = Convert.ToInt32(dataGridViewStudents.SelectedCells[0].Value);
+			Connector connector = new Connector();
+			connector.LoadColumnFromTable("*", "Students", $"stud_id={id}");
+			form.InitForm(connector.DataTable);
+			form.ShowDialog();
 		}
 	}
 }

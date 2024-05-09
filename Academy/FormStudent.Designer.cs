@@ -35,6 +35,9 @@
 			this.labelBirthDay = new System.Windows.Forms.Label();
 			this.dateTimePickerBirthDay = new System.Windows.Forms.DateTimePicker();
 			this.tableLayoutPanelStudent = new System.Windows.Forms.TableLayoutPanel();
+			this.richTextBoxMiddleName = new System.Windows.Forms.RichTextBox();
+			this.richTextBoxLastName = new System.Windows.Forms.RichTextBox();
+			this.richTextBoxFirstName = new System.Windows.Forms.RichTextBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.comboBoxGroups = new System.Windows.Forms.ComboBox();
 			this.comboBoxDirections = new System.Windows.Forms.ComboBox();
@@ -49,9 +52,7 @@
 			this.buttonSave = new System.Windows.Forms.Button();
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonBrouse = new System.Windows.Forms.Button();
-			this.richTextBoxLastName = new System.Windows.Forms.RichTextBox();
-			this.richTextBoxFirstName = new System.Windows.Forms.RichTextBox();
-			this.richTextBoxMiddleName = new System.Windows.Forms.RichTextBox();
+			this.labelID = new System.Windows.Forms.Label();
 			this.tableLayoutPanelStudent.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
@@ -129,6 +130,33 @@
 			this.tableLayoutPanelStudent.Size = new System.Drawing.Size(432, 126);
 			this.tableLayoutPanelStudent.TabIndex = 1;
 			// 
+			// richTextBoxMiddleName
+			// 
+			this.richTextBoxMiddleName.Location = new System.Drawing.Point(175, 65);
+			this.richTextBoxMiddleName.MaxLength = 128;
+			this.richTextBoxMiddleName.Name = "richTextBoxMiddleName";
+			this.richTextBoxMiddleName.Size = new System.Drawing.Size(246, 25);
+			this.richTextBoxMiddleName.TabIndex = 6;
+			this.richTextBoxMiddleName.Text = "";
+			// 
+			// richTextBoxLastName
+			// 
+			this.richTextBoxLastName.Location = new System.Drawing.Point(175, 3);
+			this.richTextBoxLastName.MaxLength = 128;
+			this.richTextBoxLastName.Name = "richTextBoxLastName";
+			this.richTextBoxLastName.Size = new System.Drawing.Size(246, 25);
+			this.richTextBoxLastName.TabIndex = 4;
+			this.richTextBoxLastName.Text = "";
+			// 
+			// richTextBoxFirstName
+			// 
+			this.richTextBoxFirstName.Location = new System.Drawing.Point(175, 34);
+			this.richTextBoxFirstName.MaxLength = 128;
+			this.richTextBoxFirstName.Name = "richTextBoxFirstName";
+			this.richTextBoxFirstName.Size = new System.Drawing.Size(246, 25);
+			this.richTextBoxFirstName.TabIndex = 5;
+			this.richTextBoxFirstName.Text = "";
+			// 
 			// tableLayoutPanel1
 			// 
 			this.tableLayoutPanel1.ColumnCount = 2;
@@ -163,6 +191,7 @@
 			this.comboBoxDirections.Name = "comboBoxDirections";
 			this.comboBoxDirections.Size = new System.Drawing.Size(246, 24);
 			this.comboBoxDirections.TabIndex = 3;
+			this.comboBoxDirections.SelectedIndexChanged += new System.EventHandler(this.comboBoxDirections_SelectedIndexChanged);
 			// 
 			// labelGroup
 			// 
@@ -269,6 +298,7 @@
 			this.buttonSave.TabIndex = 5;
 			this.buttonSave.Text = "Сохранить";
 			this.buttonSave.UseVisualStyleBackColor = true;
+			this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
 			// 
 			// buttonCancel
 			// 
@@ -288,39 +318,23 @@
 			this.buttonBrouse.TabIndex = 7;
 			this.buttonBrouse.Text = "Обзор";
 			this.buttonBrouse.UseVisualStyleBackColor = true;
+			this.buttonBrouse.Click += new System.EventHandler(this.buttonBrouse_Click);
 			// 
-			// richTextBoxLastName
+			// labelID
 			// 
-			this.richTextBoxLastName.Location = new System.Drawing.Point(175, 3);
-			this.richTextBoxLastName.MaxLength = 128;
-			this.richTextBoxLastName.Name = "richTextBoxLastName";
-			this.richTextBoxLastName.Size = new System.Drawing.Size(246, 25);
-			this.richTextBoxLastName.TabIndex = 4;
-			this.richTextBoxLastName.Text = "";
-			// 
-			// richTextBoxFirstName
-			// 
-			this.richTextBoxFirstName.Location = new System.Drawing.Point(175, 34);
-			this.richTextBoxFirstName.MaxLength = 128;
-			this.richTextBoxFirstName.Name = "richTextBoxFirstName";
-			this.richTextBoxFirstName.Size = new System.Drawing.Size(246, 25);
-			this.richTextBoxFirstName.TabIndex = 5;
-			this.richTextBoxFirstName.Text = "";
-			// 
-			// richTextBoxMiddleName
-			// 
-			this.richTextBoxMiddleName.Location = new System.Drawing.Point(175, 65);
-			this.richTextBoxMiddleName.MaxLength = 128;
-			this.richTextBoxMiddleName.Name = "richTextBoxMiddleName";
-			this.richTextBoxMiddleName.Size = new System.Drawing.Size(246, 25);
-			this.richTextBoxMiddleName.TabIndex = 6;
-			this.richTextBoxMiddleName.Text = "";
+			this.labelID.AutoSize = true;
+			this.labelID.Location = new System.Drawing.Point(450, 230);
+			this.labelID.Name = "labelID";
+			this.labelID.Size = new System.Drawing.Size(84, 16);
+			this.labelID.TabIndex = 8;
+			this.labelID.Text = "ID студента";
 			// 
 			// FormStudent
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(659, 328);
+			this.Controls.Add(this.labelID);
 			this.Controls.Add(this.buttonBrouse);
 			this.Controls.Add(this.buttonCancel);
 			this.Controls.Add(this.buttonSave);
@@ -340,6 +354,7 @@
 			this.tableLayoutPanel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -367,5 +382,6 @@
 		private System.Windows.Forms.RichTextBox richTextBoxMiddleName;
 		private System.Windows.Forms.RichTextBox richTextBoxLastName;
 		private System.Windows.Forms.RichTextBox richTextBoxFirstName;
+		private System.Windows.Forms.Label labelID;
 	}
 }

@@ -24,7 +24,7 @@ namespace Academy
 		{
 			connection.Open();
 			string query = $@"SELECT {columns} FROM {tables}";
-			if(condition!=null)
+			if(condition!=null && !condition.Contains("--"))
 			{
 				query += $" WHERE {condition}";
 			}
@@ -40,6 +40,49 @@ namespace Academy
 			}
 			connection.Close();
 			return DataTable;
+		}
+		public void InsertDataToBase(string table,string columns,string values)
+		{
+			string command = $@"INSERT INTO {table}({columns}) VALUES ({values})";
+			connection.Open();
+
+			SqlCommand cmd = new SqlCommand(command, connection);
+			cmd.ExecuteNonQuery();
+
+			connection.Close();
+		}
+		public void UpdateDataInBase(string table, string columns, string values, string condition)
+		{
+			
+			string[] columns_splitted = columns.Split(',');
+			string[] values_splitted = values.Split(',');
+			string[] expressions_splitted = new string[columns_splitted.Length];
+			string expressions = "";
+			for(int i=0;i<columns_splitted.Length;i++)
+			{
+				expressions_splitted[i] = $"{columns_splitted[i]}={values_splitted[i]}";
+				expressions+= $"{expressions_splitted[i]},";
+			}
+			expressions = expressions.Remove(expressions.Length-1);
+			string command = $@"UPDATE {table} SET {expressions} WHERE {condition}";
+			connection.Open();
+
+			SqlCommand cmd = new SqlCommand(command, connection);
+			cmd.ExecuteNonQuery();
+
+			connection.Close();
+		}
+		public int GetIDbyValue(string table, string columns, string value)
+		{
+
+			string command = $"SELECT {columns.Split(',')[0]} FROM {table} WHERE {columns.Split(',')[1]}='{value}'";
+			connection.Open();
+			SqlCommand cmd = new SqlCommand(command, connection);
+
+			int id = Convert.ToInt32(cmd.ExecuteScalar());
+
+			connection.Close();
+			return id;
 		}
 	}
 }
